@@ -1,42 +1,46 @@
 import random
 
+class Number:
+    def __init__(self):
+        self.value = random.randint(1, 99)
 
-def main():
-    print("The game is started")
+    def is_even(self):
+        return self.value % 2 == 0
 
-    num = random.randint(1,99)
-    score = 10
-    while True:     
-        users_number = input("Guess the number: ")
-        if users_number == 'exit':
-            
-            break
-        elif users_number== 'is the number even':
-            if num % 2 ==0 :
-                print('The number is even')
+    def is_match(self, guess):
+        return str(self.value) == guess
+
+class User:
+    def __init__(self):
+        self.score = 10
+
+    def decrease_score(self):
+        self.score -= 1
+
+class Game:
+    def __init__(self):
+        self.number = Number()
+        self.user = User()
+
+    def run(self):
+        print("The game is started")
+        while True:
+            users_number = input("Guess the number: ")
+            if users_number == 'exit':
+                break
+            elif users_number == 'is the number even':
+                if self.number.is_even():
+                    print('The number is even')
+                else:
+                    print("the number is odd ")
+            elif self.number.is_match(users_number):
+                print("You won")
+                print(f'Your score {self.user.score}')
+                break
             else:
-                print("the number is odd ")
-        elif num == users_number:
-            print("You won")
-            print(f'Your score {score}')
-        else: 
-            print("You lose")
-        score -= 1
-        
-
-    
-
-    # TODO: Features 
-    # use loop
-    # take input for finishing the game
-    # take input for hint question 
-    # add scoring mechanism 
-
-    # TODO: Refactor
-    # extract classes
-    # use separate files
-
-
+                print("You lose")
+            self.user.decrease_score()
 
 if __name__ == "__main__":
-    main()
+    game = Game()
+    game.run()
